@@ -1,0 +1,73 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+    <title>图片列表_js代码</title>
+</head>
+<body onload="request()">
+<div class="pd-20">
+    <table class="table table-border table-bordered table-hover table-bg table-sort" id="tab">
+        <thead>
+        <tr class="text-c">
+            <th>ID</th>
+            <th>图片</th>
+            <th>图片名称</th>
+            <th>创建时间</th>
+            <th>时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+    </table>
+    <div id="pageNav" class="pageNav"></div>
+</div>
+<script type="text/javascript">
+
+    function request(){
+        $.ajax({
+            url: "/text/findAll",
+            type: "post",
+            dataType: "json",
+            success: function(data){
+                /*这个方法里是ajax发送请求成功之后执行的代码*/
+                showData(data);//我们仅做数据展示
+            },
+            error: function(msg){
+                alert("ajax连接异常："+msg);
+            }
+        });
+    };
+    //展示数据
+    function showData(data) {
+        var str = "";//定义用于拼接的字符串
+        for (var i = 0; i < data.length; i++) {
+            //拼接表格的行和列
+            str = "<tr><td>" + data[i].id + "</td><td><img src='/path/" +data[i].picture + "' width='228.6px' height='166.5px' alt='视频无法显示'></td><td>" + data[i].picture + "</td><td>" + data[i].createTime + "</td><td>" + data[i].modificationTime + "</td><td><a onclick='article_de("+data[i].id+")' ><i class=\"icon-trash\"></i></a></td></tr>";
+            //追加到table中
+            $("#tab").append(str); }
+    }
+
+    function article_de(id){
+        layer.confirm("确定删除吗？",function (index){
+            $.ajax({
+                type: "POST",
+                url: "/text/delete",
+                dataType: "JSON",
+                data:{
+                    "id":id,
+                },
+                success: function (data) {
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        alert("删除失败")
+                    }
+                },
+
+            });
+        })
+    }
+</script>
+
+</body>
+</html>
