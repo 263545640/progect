@@ -16,18 +16,30 @@ import okhttp3.RequestBody;
 
 public class QiniuCloudUtil {
 
+//    @Value("${ACCESS_KEY}")
+//    private String ACCESS_KEY;
+//
+//    @Value("${SECRET_KEY}")
+//    private String SECRET_KEY;
+//
+//    // 要上传的空间
+//    @Value("${bucketname}")
+//    private String bucketname;
+//
+//    @Value("${DOMAIN}")
+//    private String DOMAIN;
+
     private static final String ACCESS_KEY = "DwZMUh5Wq2uJR3342o-o1FGIFkvg54oOdYbt7N0Y";
 
     private static final String SECRET_KEY = "ADJXLiogIYWnxnW1g9AlTxn-3YLyKo3Ax0b40Cz1";
 
-    // 要上传的空间
+
     private static final String bucketname = "anao";
 
+    private static final String DOMAIN = "qblgv435h.bkt.clouddn.com";
     // 密钥
-
     Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
 
-    private static final String DOMAIN = "qblgv435h.bkt.clouddn.com";
 
     private static final String style = "imageView2/0/q/75";
 
@@ -74,7 +86,6 @@ public class QiniuCloudUtil {
     //刷新文件
     public void refresh(String url) throws QiniuException{
         String [] urls = {url};
-        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
         CdnManager c = new CdnManager(auth);
         Response response = c.refreshUrls(urls);
     }

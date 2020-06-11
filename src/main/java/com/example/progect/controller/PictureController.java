@@ -36,12 +36,12 @@ public class PictureController {
 
     @ResponseBody
     @RequestMapping(value="/addPicture", method= RequestMethod.POST)
-    public String uploadImg(@RequestParam MultipartFile image, HttpServletRequest request) {
+    public ResultBean uploadImg(@RequestParam MultipartFile image, HttpServletRequest request) {
         ResultBean result = new ResultBean();
         if (image.isEmpty()) {
             result.setCode(400);
             result.setMsg("文件为空，请重新上传");
-            return "文件为空，请重新上传";
+            return result;
         }
         try {
             byte[] bytes = image.getBytes();
@@ -62,11 +62,11 @@ public class PictureController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return "文件上传成功";
+            return result;
         } catch (IOException e) {
             result.setCode(500);
             result.setMsg("文件上传发生异常！");
-            return "文件上传发生异常！";
+            return result;
         }
     }
 
